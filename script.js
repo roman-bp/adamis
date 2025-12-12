@@ -1,27 +1,52 @@
-document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    let name = document.getElementById('name').value;
-    let email = document.getElementById('email').value;
-    let message = document.getElementById('message').value;
-    
-    let token = '6852234273:AAGtNELD5wP9Kw-SOx_9l8uPKyS9fPj8aCk';  // Укажите сюда токен вашего Telegram бота
-    let chatId = '720338217';  // Укажите сюда ваш Chat ID
-    let text = `Ім'я: ${name}\nEmail: ${email}\nПовідомлення: ${message}`;
-    
-    let url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`;
-    
-    fetch(url)
-        .then(response => {
-            if (response.ok) {
-                alert('Ваше повідомлення успішно надіслано!');
-                document.getElementById('contact-form').reset();
+document.addEventListener('DOMContentLoaded', function () {
+
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (!name || !email || !message) {
+            alert('Заповніть всі поля');
+            return;
+        }
+
+        const token = '6852234273:AAGtNELD5wP9Kw-SOx_9l8uPKyS9fPj8aCk';
+        const chatId = '720338217';
+
+        const text =
+            `Ім'я: ${name}\n` +
+            `Email: ${email}\n` +
+            `Повідомлення:\n${message}`;
+
+        const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: text
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.ok) {
+                alert('Повідомлення надіслано');
+                form.reset();
             } else {
-                alert('Сталася помилка при надсиланні повідомлення.');
+                alert('Помилка Telegram API');
             }
         })
-        .catch(error => {
-            console.error('Помилка:', error);
-            alert('Сталася помилка при надсиланні повідомлення.');
+        .catch(() => {
+            alert('Помилка з’єднання');
         });
+    });
+
 });
