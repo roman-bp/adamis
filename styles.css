@@ -114,26 +114,58 @@ main {
     flex-wrap: wrap;
 }
 
-.service-card {
-    background-color: var(--background-color);
-    padding: 20px;
+.service-card-link{
+    text-decoration: none;
+    color: inherit;
+    display: block;
     width: 30%;
     margin-bottom: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.service-card:hover {
+.service-card {
+    position: relative;
+    overflow: visible; /* важно */
+}
+
+/* рамка */
+.service-card::after {
+    content: "";
+    position: absolute;
+    inset: -6px; /* делает рамку БОЛЬШЕ карточки */
+    border: 2px solid var(--secondary-color);
+    border-radius: 14px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+}
+
+
+.service-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 30%;
+    margin-bottom: 20px;
+}
+
+.service-card-link:hover .service-card {
     transform: translateY(-10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+@media (hover: none) {
+    .service-card-link:hover .service-card {
+        transform: none;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
 }
 
 .service-card h3 {
     color: var(--secondary-color);
     margin-bottom: 15px;
 }
+
+
 
 /* Стилі для відгуків */
 #testimonials {
