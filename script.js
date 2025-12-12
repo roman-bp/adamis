@@ -5,8 +5,8 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     let email = document.getElementById('email').value;
     let message = document.getElementById('message').value;
     
-    let token = '7458598541:AAHhU1lLPCkCg4APDq4qtOLeD4BDoqoHwTk';  // Укажите сюда токен вашего Telegram бота
-    let chatId = '783899091';  // Укажите сюда ваш Chat ID
+    let token = '6852234273:AAGtNELD5wP9Kw-SOx_9l8uPKyS9fPj8aCk';  // Укажите сюда токен вашего Telegram бота
+    let chatId = '720338217';  // Укажите сюда ваш Chat ID
     let text = `Ім'я: ${name}\nEmail: ${email}\nПовідомлення: ${message}`;
     
     let url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`;
